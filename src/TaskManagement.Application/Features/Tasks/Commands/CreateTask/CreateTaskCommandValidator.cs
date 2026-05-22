@@ -14,6 +14,8 @@ public class CreateTaskCommandValidator : AbstractValidator<CreateTaskCommand>
 
         RuleFor(x => x.Description).MaximumLength(2000);
 
+        RuleFor(x => x.Priority).IsInEnum();
+
         RuleFor(x => x.DueDate)
             .GreaterThan(DateTime.UtcNow)
             .When(x => x.DueDate.HasValue)

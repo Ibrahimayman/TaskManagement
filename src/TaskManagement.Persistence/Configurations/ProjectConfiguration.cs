@@ -9,15 +9,10 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
     public void Configure(EntityTypeBuilder<Project> builder)
     {
         builder.ToTable("Projects");
-
         builder.HasKey(p => p.Id);
 
-        builder.Property(p => p.Name)
-            .IsRequired()
-            .HasMaxLength(150);
-
-        builder.Property(p => p.Description)
-            .HasMaxLength(2000);
+        builder.Property(p => p.Name).IsRequired().HasMaxLength(150);
+        builder.Property(p => p.Description).HasMaxLength(2000);
 
         builder.HasIndex(p => p.OwnerId);
 
@@ -26,6 +21,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasForeignKey(t => t.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasQueryFilter(p => !p.IsDeleted);
+        builder.Metadata.FindNavigation(nameof(Project.Tasks))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

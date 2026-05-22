@@ -23,12 +23,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
             throw new ForbiddenAccessException();
         }
 
-        var project = new Project
-        {
-            Name = request.Name.Trim(),
-            Description = request.Description?.Trim(),
-            OwnerId = _currentUser.UserId.Value
-        };
+        var project = Project.Create(request.Name, request.Description, _currentUser.UserId.Value);
 
         _context.Projects.Add(project);
         await _context.SaveChangesAsync(cancellationToken);

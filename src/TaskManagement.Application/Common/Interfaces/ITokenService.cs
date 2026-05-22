@@ -1,9 +1,7 @@
-using TaskManagement.Domain.Entities;
-
 namespace TaskManagement.Application.Common.Interfaces;
 
 public interface ITokenService
 {
-    string GenerateAccessToken(User user);
+    string GenerateAccessToken(Guid userId, string email, string fullName);
     DateTime GetAccessTokenExpiration();
 }

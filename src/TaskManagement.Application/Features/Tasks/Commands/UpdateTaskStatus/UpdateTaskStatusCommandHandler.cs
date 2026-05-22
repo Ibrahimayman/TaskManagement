@@ -29,7 +29,7 @@ public class UpdateTaskStatusCommandHandler : IRequestHandler<UpdateTaskStatusCo
             throw new ForbiddenAccessException();
         }
 
-        task.Status = request.Status;
+        task.UpdateStatus(request.Status);
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

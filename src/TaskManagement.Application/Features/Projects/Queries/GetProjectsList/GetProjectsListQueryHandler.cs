@@ -47,7 +47,6 @@ public class GetProjectsListQueryHandler : IRequestHandler<GetProjectsListQuery,
                 Description = p.Description,
                 OwnerId = p.OwnerId,
                 CreatedAt = p.CreatedAt,
-                ModifiedAt = p.ModifiedAt,
                 TaskCount = p.Tasks.Count
             });
 

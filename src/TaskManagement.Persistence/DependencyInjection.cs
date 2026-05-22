@@ -1,10 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaskManagement.Application.Common.Interfaces;
 using TaskManagement.Persistence.Contexts;
-using TaskManagement.Persistence.Interceptors;
+using TaskManagement.Persistence.Identity;
 
 namespace TaskManagement.Persistence;
 
@@ -17,11 +17,8 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-
-        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString, sql =>
             {
                 sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
@@ -30,6 +27,21 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
+        services
+            .AddIdentityCore<ApplicationUser>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+            })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        services.AddScoped<IIdentityService, IdentityService>();
 
         return services;
     }

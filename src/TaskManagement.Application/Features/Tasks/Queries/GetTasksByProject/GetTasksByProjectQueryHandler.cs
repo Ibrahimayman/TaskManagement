@@ -41,9 +41,9 @@ public class GetTasksByProjectQueryHandler : IRequestHandler<GetTasksByProjectQu
                 Title = t.Title,
                 Description = t.Description,
                 Status = t.Status,
+                Priority = t.Priority,
                 DueDate = t.DueDate,
-                CreatedAt = t.CreatedAt,
-                ModifiedAt = t.ModifiedAt
+                CreatedAt = t.CreatedAt
             })
             .ToListAsync(cancellationToken);
     }

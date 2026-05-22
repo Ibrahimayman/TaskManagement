@@ -28,8 +28,8 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
             throw new ForbiddenAccessException();
         }
 
-        project.Name = request.Name.Trim();
-        project.Description = request.Description?.Trim();
+        project.Rename(request.Name);
+        project.UpdateDescription(request.Description);
 
         await _context.SaveChangesAsync(cancellationToken);
     }

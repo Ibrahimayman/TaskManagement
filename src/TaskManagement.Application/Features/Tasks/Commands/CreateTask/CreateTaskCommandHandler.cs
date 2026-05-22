@@ -28,13 +28,12 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand, Guid>
             throw new ForbiddenAccessException();
         }
 
-        var task = new TaskItem
-        {
-            ProjectId = project.Id,
-            Title = request.Title.Trim(),
-            Description = request.Description?.Trim(),
-            DueDate = request.DueDate
-        };
+        var task = TaskItem.Create(
+            project.Id,
+            request.Title,
+            request.Description,
+            request.Priority,
+            request.DueDate);
 
         _context.Tasks.Add(task);
         await _context.SaveChangesAsync(cancellationToken);

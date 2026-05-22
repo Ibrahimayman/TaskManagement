@@ -10,7 +10,8 @@ public class TaskDto
     public string? Description { get; set; }
     public TaskItemStatus Status { get; set; }
     public string StatusName => Status.ToString();
+    public TaskPriority Priority { get; set; }
+    public string PriorityName => Priority.ToString();
     public DateTime? DueDate { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime? ModifiedAt { get; set; }
 }

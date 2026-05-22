@@ -30,7 +30,6 @@ public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, P
                 Description = p.Description,
                 OwnerId = p.OwnerId,
                 CreatedAt = p.CreatedAt,
-                ModifiedAt = p.ModifiedAt,
                 TaskCount = p.Tasks.Count
             })
             .FirstOrDefaultAsync(cancellationToken)
