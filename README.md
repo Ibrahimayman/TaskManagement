@@ -200,13 +200,3 @@ TaskManagement.API/
 8. **Soft delete + audit** via EF Core interceptor.
 9. **Ownership-based authorization** in every handler that mutates data.
 10. **Strongly-typed configuration** with the Options pattern (`JwtSettings`).
-
-## Next Steps
-
-- Add unit tests (`tests/TaskManagement.Application.UnitTests`) for command/query handlers.
-- Add integration tests with `WebApplicationFactory` and `Testcontainers`.
-- Add refresh tokens (extend `AuthResponse` and `ITokenService`).
-- Add API versioning (`Asp.Versioning.Mvc`).
-- Add Serilog and structured logging.
-- Add Health Checks and Rate Limiting (built into .NET 9).
-- Move JWT secret to Azure Key Vault / User Secrets in production.
